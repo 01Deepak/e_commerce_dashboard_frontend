@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import styles from './Register.module.scss';
+import { hitRegisterApi } from './RagisterApi';
 
-interface IFormInput {
+export interface IFormInput {
   name: string;
   email: string;
   password: string;
 }
+
+
+
+
 
 const Register: React.FC = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<IFormInput>();
@@ -16,8 +21,13 @@ const Register: React.FC = () => {
   const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
     console.log("data",registerData);
     setRegisterData(data);
+    const response = hitRegisterApi(data);
+    console.log("response = ", response);
+
     reset();
+    
   };
+
 
   
 
