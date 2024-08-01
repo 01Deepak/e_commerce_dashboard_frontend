@@ -3,6 +3,7 @@ import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
+  const auth = localStorage.getItem('user')
   return (
     <header className={styles.header}>
       <h1 className={styles.title}>My Website</h1>
@@ -11,7 +12,12 @@ const Header: React.FC = () => {
         <Link to="/about" className={styles.link}>About</Link>
         <Link to="/services" className={styles.link}>Services</Link>
         <Link to="/contact" className={styles.link}>Contact</Link>
+        {
+          auth ? 
+          <Link to="/logout" className={styles.link}>Logout</Link>
+          :
         <Link to="/register" className={styles.link}>Register</Link>
+        }
         <Link to="/login" className={styles.link}>Login</Link>
       </nav>
     </header>

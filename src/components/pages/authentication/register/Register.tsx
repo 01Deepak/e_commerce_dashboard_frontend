@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import styles from './Register.module.scss';
@@ -19,6 +19,13 @@ const Register: React.FC = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<IFormInput>();
   const [registerData, setRegisterData] = useState<IFormInput>({ name: '', email: '', password: '' });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const auth = localStorage.getItem('user')
+    if (auth) {
+      navigate("/")
+    }
+  },[])
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     console.log("data",registerData);
     setRegisterData(data);
