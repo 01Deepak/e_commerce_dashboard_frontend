@@ -9,12 +9,13 @@ export const hitRegisterApi = async (data: IFormInput) => {
       },
       body: JSON.stringify(data),
     });
-  
+    console.log("data responseData111 =", response);
     const responseData = await response.json();
-    console.log("data", responseData);
+    console.log("data responseData =", responseData);
     if (response.ok) {
       return responseData;
     } else {
+        return response.ok;
       throw new Error(responseData.message);
     }
   }

@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import styles from './Register.module.scss';
 import { hitRegisterApi } from './RagisterApi';
+import { useNavigate } from 'react-router-dom';
 
 export interface IFormInput {
   name: string;
@@ -17,14 +18,17 @@ export interface IFormInput {
 const Register: React.FC = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<IFormInput>();
   const [registerData, setRegisterData] = useState<IFormInput>({ name: '', email: '', password: '' });
-
-  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
+  const navigate = useNavigate();
+  const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     console.log("data",registerData);
     setRegisterData(data);
-    const response = hitRegisterApi(data);
-    console.log("response = ", response);
-
+    const response = await hitRegisterApi(data);
+    console.log("response123 = ", response);
     reset();
+    if (response) {
+      localStorage.setItem('user', JSON.stringify(response));
+      navigate("/");
+    }
     
   };
 
