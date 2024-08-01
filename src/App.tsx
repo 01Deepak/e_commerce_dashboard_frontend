@@ -2,6 +2,7 @@ import React from "react"
 import Header from "./components/header/Header"
 import Footer from "./components/footer/Footer"
 import MainRoute from "./components/main-route/MainRoute"
+import './App.css'
 
 function App() {
 
@@ -9,7 +10,7 @@ function App() {
     <>
       <div>
       <Header />
-      <main style={{ padding: '20px'}}>
+      <main className="container">
         <MainRoute />
         {/* <p>Welcome to my website!</p> */}
       </main>

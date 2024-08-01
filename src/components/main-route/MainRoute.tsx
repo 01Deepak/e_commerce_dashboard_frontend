@@ -5,6 +5,7 @@ import About from '../pages/about/About'
 import Services from '../pages/services/Services'
 import Contact from '../pages/contact/Contact'
 import Register from '../pages/authentication/register/Register'
+import Login from '../pages/authentication/login/Login'
 
 const MainRoute = () => {
   return (
@@ -15,7 +16,7 @@ const MainRoute = () => {
     <Route path="/contact" element={<Contact />}/>
     <Route path="/services" element={<Services />}/>
     <Route path="/register" element={<Register />}/>
-
+    <Route path="/login" element={<Login />}/>
     </Routes>
     
   )
