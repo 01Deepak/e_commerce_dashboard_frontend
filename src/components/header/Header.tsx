@@ -1,9 +1,15 @@
 import React from 'react';
 import styles from './Header.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
+  const navigate = useNavigate();
   const auth = localStorage.getItem('user')
+
+  const handleLogout = () => {
+    localStorage.removeItem('user')
+    navigate("/register")
+  }
   return (
     <header className={styles.header}>
       <h1 className={styles.title}>My Website</h1>
@@ -14,7 +20,7 @@ const Header: React.FC = () => {
         <Link to="/contact" className={styles.link}>Contact</Link>
         {
           auth ? 
-          <Link to="/logout" className={styles.link}>Logout</Link>
+          <Link to="/register" className={styles.link} onClick={handleLogout}>Logout</Link>
           :
         <Link to="/register" className={styles.link}>Register</Link>
         }
