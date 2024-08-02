@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import styles from './Login.module.scss';
+import { loginApi } from './loginApi';
+import { useNavigate } from 'react-router-dom';
 
 export interface ILoginFormInput {
   email: string;
@@ -9,22 +11,33 @@ export interface ILoginFormInput {
 }
 
 
-
-
-
 const Login: React.FC = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ILoginFormInput>();
   const [loginData, setLoginData] = useState<ILoginFormInput>({email: '', password: '' });
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<ILoginFormInput> = async (data: ILoginFormInput) => {
     console.log("login data = ",loginData);
     setLoginData(data);
+    const response = await loginApi(data);
+    console.log("response123 = ", response);
+    if (response.name) {
+        localStorage.setItem('user', JSON.stringify(response));
+        navigate("/");
+    }else{
+        alert(response.message)
+    }
+    
+    
     reset();
-    
-    
   };
 
-
+useEffect(() => {
+  const auth = localStorage.getItem('user')
+  if (auth) {
+    navigate("/")
+  }
+},[])
   
 
   return (
