@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Header.module.scss';
-import { json, Link, useNavigate } from 'react-router-dom';
+import {Link, useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ const Header: React.FC = () => {
           <Link to="/about" className={styles.link}>About</Link>
           <Link to="/services" className={styles.link}>Services</Link>
           <Link to="/contact" className={styles.link}>Contact</Link>
+          <Link to="/add-product" className={styles.link}>Add Product</Link>
           <Link to="/register" className={styles.link} onClick={handleLogout}>Logout({JSON.parse(auth).name})</Link>
           </>
           :

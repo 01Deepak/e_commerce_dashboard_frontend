@@ -7,6 +7,7 @@ import Contact from '../pages/contact/Contact'
 import Register from '../pages/authentication/register/Register'
 import Login from '../pages/authentication/login/Login'
 import PrivateRoute from '../PrivateRoute'
+import AddProduct from '../pages/product/add-product/AddProduct'
 
 const MainRoute = () => {
   return (
@@ -17,6 +18,7 @@ const MainRoute = () => {
     <Route path="/home" element={<Home />}/>
     <Route path="/about" element={<About />}/>
     <Route path="/contact" element={<Contact />}/>
+    <Route path="/add-product" element={<AddProduct />}/>
     <Route path="/services" element={<Services />}/>
     </Route>
      
