@@ -3,12 +3,14 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import styles from "./AddProduct.module.scss";
+import { hitAddProductApi } from "./AddProductApi";
 
 export interface IAddProductFormInput {
   name: string;
   price: string;
   category: string;
   company: string;
+  userId: string;
 }
 
 const AddProduct: React.FC = () => {
@@ -25,8 +27,14 @@ const AddProduct: React.FC = () => {
   const onSubmit: SubmitHandler<IAddProductFormInput> = async (
     data: IAddProductFormInput
   ) => {
-    
+    if (userId) {
+        data["userId"] = userId;
+    }
     console.log("add product data = ", data);
+    const response = await hitAddProductApi(data);
+    if (response.name) {
+        alert("Product added successfully");
+    }
     reset();
   };
 
