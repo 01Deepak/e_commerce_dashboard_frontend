@@ -1,4 +1,9 @@
 .products_container {
     margin-top: 20px;
   }
+.products{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
   
