@@ -3,6 +3,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import styles from "./AddProduct.module.scss";
 import { hitAddProductApi } from "./AddProductApi";
+import { useNavigate } from "react-router-dom";
+import { updateProductApi } from "../update-product/UpdateProductApi";
 
 export interface IAddProductFormInput {
   name: string;
@@ -10,6 +12,7 @@ export interface IAddProductFormInput {
   category: string;
   company: string;
   userId: string;
+  _id: string;
 }
 
 export interface AddProductProps {
@@ -24,6 +27,7 @@ const AddProduct: React.FC<AddProductProps> = (props) => {
     reset,
   } = useForm<IAddProductFormInput>();
   const {dataForUpdate} = props;
+  const navigate = useNavigate();
 
   let userId = localStorage.getItem("user");
   userId = JSON.parse(userId || "{}")._id;
@@ -37,8 +41,28 @@ const AddProduct: React.FC<AddProductProps> = (props) => {
   }
 
   const updateProduct = async (data: IAddProductFormInput) => {
-   console.log("update product data = ", data);
+   console.log("update product data = ", data, dataForUpdate);
+   const body = {
+    _id: dataForUpdate?._id || "",
+    name: data.name,
+    price: data.price,
+    category: data.category,
+    company: data.company,
+    userId: data.userId,
+   }
+   console.log("update product body = ", body);
+   
+
+   const updateResponse = await updateProductApi(body);
+   console.log("update product response = ", updateResponse);
+   if (updateResponse?.modifiedCount > 0) {
+    alert("Product updated successfully");
+    navigate("/products");
+   }else{
+    alert("Something went wrong");
+   }
   }
+  
 
   const onSubmit: SubmitHandler<IAddProductFormInput> = async (
     data: IAddProductFormInput
@@ -47,10 +71,9 @@ const AddProduct: React.FC<AddProductProps> = (props) => {
         data["userId"] = userId;
     }
     if ( dataForUpdate?.name) {
-      updateProduct(data);
+      await updateProduct(data);
     }else{
-      alert("Add product");
-      addProduct(data);
+      await addProduct(data);
     }
 
    
