@@ -3,6 +3,7 @@ import { Typography } from "@mui/material";
 import styles from "./Products.module.scss";
 import ProductCard from "../../ui/ProductCard";
 import { deleteProduct, ProductsApi } from "./ProductsApi";
+import { useNavigate } from "react-router-dom";
 
 
 export interface Product {
@@ -15,6 +16,7 @@ export interface Product {
   }
 const Products: React.FC = () => {
  const [products, setProducts] = useState<Product[]>([]);
+ const natigate = useNavigate();
 
  useEffect(() => {
     const fetchProducts = async () => {
@@ -32,6 +34,11 @@ const Products: React.FC = () => {
         alert("Something went wrong")
     }
   };
+
+  const handleUpdate = async (id: string) => {
+    console.log("update product id = ", id);
+    natigate(`/update/product/${id}`);
+  }
   
 
   return (
@@ -42,7 +49,7 @@ const Products: React.FC = () => {
       <div className={styles.products}>
       {
           products.map((product) => (
-              <ProductCard key={product._id} product={product} handleDelete={handleDelete}/>
+              <ProductCard key={product._id} product={product} handleDelete={handleDelete} handleUpdate={handleUpdate}/>
             ))
         }
         </div>

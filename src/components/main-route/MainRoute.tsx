@@ -7,6 +7,7 @@ import Login from '../pages/authentication/login/Login'
 import PrivateRoute from '../PrivateRoute'
 import AddProduct from '../pages/product/add-product/AddProduct'
 import Products from '../pages/product/show-products/Products'
+import UpdateProduct from '../pages/product/update-product/UpdateProduct'
 
 const MainRoute = () => {
   return (
@@ -16,6 +17,7 @@ const MainRoute = () => {
     <Route path="/" element={<Products />}/>
     <Route path="/products" element={<Products />}/>
     <Route path="/add-product" element={<AddProduct />}/>
+    <Route path="/update/product/:id" element={<UpdateProduct />}/>
     <Route path="/contact" element={<Contact />}/>
     <Route path="/services" element={<Services />}/>
     </Route>

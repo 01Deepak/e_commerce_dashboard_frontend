@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import styles from "./AddProduct.module.scss";
@@ -12,16 +12,33 @@ export interface IAddProductFormInput {
   userId: string;
 }
 
-const AddProduct: React.FC = () => {
+export interface AddProductProps {
+  dataForUpdate?: IAddProductFormInput;
+}
+
+const AddProduct: React.FC<AddProductProps> = (props) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<IAddProductFormInput>();
+  const {dataForUpdate} = props;
 
   let userId = localStorage.getItem("user");
   userId = JSON.parse(userId || "{}")._id;
+
+  const addProduct = async (data: IAddProductFormInput) => {
+    console.log("add product data = ", data);
+    const response = await hitAddProductApi(data);
+    if (response.name) {
+        alert("Product added successfully");
+    }
+  }
+
+  const updateProduct = async (data: IAddProductFormInput) => {
+   console.log("update product data = ", data);
+  }
 
   const onSubmit: SubmitHandler<IAddProductFormInput> = async (
     data: IAddProductFormInput
@@ -29,18 +46,27 @@ const AddProduct: React.FC = () => {
     if (userId) {
         data["userId"] = userId;
     }
-    console.log("add product data = ", data);
-    const response = await hitAddProductApi(data);
-    if (response.name) {
-        alert("Product added successfully");
+    if ( dataForUpdate?.name) {
+      updateProduct(data);
+    }else{
+      alert("Add product");
+      addProduct(data);
     }
+
+   
     reset();
   };
+
+  useEffect(() => {
+    if (dataForUpdate?.name) {
+      reset(dataForUpdate);
+    }
+  }, [dataForUpdate, reset]);
 
   return (
     <Container className={styles.add_product} maxWidth="xs">
       <Typography variant="h4" component="h2" align="center" gutterBottom>
-        Add Product
+        {dataForUpdate?.name ? "Update" : "Add"} Product
       </Typography>
       <Box
         component="form"
@@ -55,6 +81,9 @@ const AddProduct: React.FC = () => {
           label="Name"
           autoComplete="name"
           autoFocus
+          InputLabelProps={{
+            shrink: true,
+          }}
           {...register("name", {
             required: "Name is required",
             validate: (value) =>
@@ -69,7 +98,9 @@ const AddProduct: React.FC = () => {
           id="price"
           label="Price"
           autoComplete="price"
-          autoFocus
+          InputLabelProps={{
+            shrink: true,
+          }}
           {...register("price", {
             required: "Price is required",
             validate: (value) =>
@@ -84,7 +115,9 @@ const AddProduct: React.FC = () => {
           id="category"
           label="Category"
           autoComplete="category"
-          autoFocus
+          InputLabelProps={{
+            shrink: true,
+          }}
           {...register("category", {
             required: "Category is required",
             validate: (value) =>
@@ -99,7 +132,9 @@ const AddProduct: React.FC = () => {
           id="company"
           label="Company"
           autoComplete="company"
-          autoFocus
+          InputLabelProps={{
+            shrink: true,
+          }}
           {...register("company", {
             required: "Company is required",
             validate: (value) =>
@@ -114,7 +149,7 @@ const AddProduct: React.FC = () => {
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
         >
-          Register
+          {dataForUpdate?.name ? "Update" : "Add"}
         </Button>
       </Box>
     </Container>

@@ -11,12 +11,17 @@ import { Product } from "../product/show-products/Products";
   interface BasicCardProps {
     product: Product;
     handleDelete: (id: string) => Promise<void>;
+    handleUpdate: (id: string) => Promise<void>;
   }
 
 const  BasicCard = (props: BasicCardProps) => {
 
     const handleDelete = async () => {
         props.handleDelete(props.product._id);
+    }
+
+    const handleUpdate = async () => {
+        props.handleUpdate(props.product._id);
     }
   return (
     <Card sx={{ minWidth: 275,backgroundColor: '#f3f9ff',width:'300px',color:'#666666', fontSize:'18px' }}>
@@ -35,7 +40,7 @@ const  BasicCard = (props: BasicCardProps) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">edit</Button>
+        <Button size="small" onClick={handleUpdate}>edit</Button>
         <Button size="small" onClick={handleDelete}>delete</Button>
       </CardActions>
     </Card>
