@@ -2,7 +2,7 @@ import React, {useState, useEffect } from "react";
 import { Typography } from "@mui/material";
 import styles from "./Products.module.scss";
 import ProductCard from "../../ui/ProductCard";
-import { ProductsApi } from "./ProductsApi";
+import { deleteProduct, ProductsApi } from "./ProductsApi";
 
 
 export interface Product {
@@ -23,6 +23,15 @@ const Products: React.FC = () => {
     };
     fetchProducts();
   }, []);
+
+  const handleDelete = async (id: string) => {
+    const response = await deleteProduct(id);
+    if (response) {
+      setProducts(products.filter((product) => product._id !== id));
+    }else{
+        alert("Something went wrong")
+    }
+  };
   
 
   return (
@@ -33,7 +42,7 @@ const Products: React.FC = () => {
       <div className={styles.products}>
       {
           products.map((product) => (
-              <ProductCard key={product._id} product={product} />
+              <ProductCard key={product._id} product={product} handleDelete={handleDelete}/>
             ))
         }
         </div>

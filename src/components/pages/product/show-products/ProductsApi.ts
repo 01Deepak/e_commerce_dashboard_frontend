@@ -12,3 +12,18 @@ export const ProductsApi = async () => {
             throw new Error(responseData.message);
         }
     }
+
+export const deleteProduct = async (id: string) => {
+    const response = await fetch(`http://localhost:4000/delete/product/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    const responseData = await response.json();
+    if (response.ok) {
+        return responseData;
+    } else {
+        throw new Error(responseData.message);
+    }
+}
