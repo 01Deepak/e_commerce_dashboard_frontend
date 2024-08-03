@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import styles from "./AddProduct.module.scss";
 import { hitAddProductApi } from "./AddProductApi";
 

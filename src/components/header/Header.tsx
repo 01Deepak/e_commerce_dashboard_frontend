@@ -18,11 +18,10 @@ const Header: React.FC = () => {
         {
           auth ? 
           <>
-          <Link to="/home" className={styles.link}>Home</Link>
-          <Link to="/about" className={styles.link}>About</Link>
+          <Link to="/products" className={styles.link}>Products</Link>
+          <Link to="/add-product" className={styles.link}>Add Product</Link>
           <Link to="/services" className={styles.link}>Services</Link>
           <Link to="/contact" className={styles.link}>Contact</Link>
-          <Link to="/add-product" className={styles.link}>Add Product</Link>
           <Link to="/register" className={styles.link} onClick={handleLogout}>Logout({JSON.parse(auth).name})</Link>
           </>
           :
