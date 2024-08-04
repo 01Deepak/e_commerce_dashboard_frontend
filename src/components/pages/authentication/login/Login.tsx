@@ -21,11 +21,11 @@ const Login: React.FC = () => {
     setLoginData(data);
     const response = await loginApi(data);
     console.log("response123 = ", response);
-    if (response.name) {
+    if (response.result.name) {
         localStorage.setItem('user', JSON.stringify(response));
         navigate("/");
     }else{
-        alert(response.message)
+        alert("Something went wrong")
     }
     
     

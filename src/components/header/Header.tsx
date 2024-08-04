@@ -22,7 +22,7 @@ const Header: React.FC = () => {
           <Link to="/add-product" className={styles.link}>Add Product</Link>
           <Link to="/services" className={styles.link}>Services</Link>
           <Link to="/contact" className={styles.link}>Contact</Link>
-          <Link to="/register" className={styles.link} onClick={handleLogout}>Logout({JSON.parse(auth).name})</Link>
+          <Link to="/register" className={styles.link} onClick={handleLogout}>Logout({JSON.parse(auth).result.name})</Link>
           </>
           :
           <>
