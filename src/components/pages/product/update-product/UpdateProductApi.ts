@@ -1,10 +1,11 @@
 import { IAddProductFormInput } from "../add-product/AddProduct";
 
-export const getSingleProduct = async (id: string) => {
+export const getSingleProduct = async (id: string, token: string) => {
     const response = await fetch(`http://localhost:4000/product/${id}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
+            "access-token": token,
         },
     });
     const responseData = await response.json();
@@ -15,11 +16,12 @@ export const getSingleProduct = async (id: string) => {
     }
 };
 
-export const updateProductApi = async (data: IAddProductFormInput) => {
+export const updateProductApi = async (data: IAddProductFormInput, token: string) => {
     const response = await fetch(`http://localhost:4000/update/product/${data._id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
+            "access-token": token,
         },
         body: JSON.stringify(data),
     });

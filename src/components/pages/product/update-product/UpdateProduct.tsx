@@ -7,12 +7,14 @@ import { getSingleProduct } from './UpdateProductApi';
 const UpdateProduct = () => {
     const [dataForUpdate, setDataForUpdate] = useState<IAddProductFormInput>();
     const {id} = useParams();
+    const loginData = JSON.parse(localStorage.getItem("user") ?? "null");
+    const token = loginData?.token;
 
     useEffect(() => {
         const fetchData = async () => {
             if (id) {
                 console.log("update product id = ", id);
-                const product = await getSingleProduct(id);
+                const product = await getSingleProduct(id, token);
                 setDataForUpdate(product);
             }
         };
@@ -22,7 +24,6 @@ const UpdateProduct = () => {
 
   return (
     <>
-    <div>UpdateProduct - {id}</div>
     <AddProduct dataForUpdate={dataForUpdate}/>
     </>
   )

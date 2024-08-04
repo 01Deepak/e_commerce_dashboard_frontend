@@ -19,11 +19,17 @@ const Products: React.FC = () => {
  const [products, setProducts] = useState<Product[]>([]);
  const [searchQuery, setSearchQuery] = useState("");
  const natigate = useNavigate();
+ const loginData = JSON.parse(localStorage.getItem("user") ?? "null");
+ const token = loginData?.token;
+ 
+ 
+ console.log("login data = ", token);
+ 
 
  
 
   const handleDelete = async (id: string) => {
-    const response = await deleteProduct(id);
+    const response = await deleteProduct(id, token);
     if (response) {
       setProducts(products.filter((product) => product._id !== id));
     }else{
@@ -46,13 +52,13 @@ const Products: React.FC = () => {
 
 
   const fetchProducts = async () => {
-    const response = await ProductsApi();
+    const response = await ProductsApi(token);
     setProducts(response);
   };
 
   useEffect(() => {
     const searchResponse = async () => {
-      const response = await searchProduct(searchQuery);
+      const response = await searchProduct(searchQuery,token);
       setProducts(response);
     };
     console.log("search query = ", searchQuery);

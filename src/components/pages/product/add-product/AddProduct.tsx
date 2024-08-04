@@ -28,13 +28,14 @@ const AddProduct: React.FC<AddProductProps> = (props) => {
   } = useForm<IAddProductFormInput>();
   const {dataForUpdate} = props;
   const navigate = useNavigate();
-
+  const loginData = JSON.parse(localStorage.getItem("user") ?? "null");
+  const token = loginData?.token;
   let userId = localStorage.getItem("user");
   userId = JSON.parse(userId || "{}")._id;
 
   const addProduct = async (data: IAddProductFormInput) => {
     console.log("add product data = ", data);
-    const response = await hitAddProductApi(data);
+    const response = await hitAddProductApi(data, token);
     if (response.name) {
         alert("Product added successfully");
     }
@@ -53,7 +54,7 @@ const AddProduct: React.FC<AddProductProps> = (props) => {
    console.log("update product body = ", body);
    
 
-   const updateResponse = await updateProductApi(body);
+   const updateResponse = await updateProductApi(body, token);
    console.log("update product response = ", updateResponse);
    if (updateResponse?.modifiedCount > 0) {
     alert("Product updated successfully");
